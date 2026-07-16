@@ -79,10 +79,26 @@ if (-not (Test-Path $appDataDir)) {
 }
 
 $settingsFile = Join-Path $appDataDir "settings.txt"
-if (-not (Test-Path $settingsFile)) {
-    Set-Content -Path $settingsFile -Value @("API_URL=https://localhost:3000", "TOKEN=secure-token-123")
-    Write-Host "[OK] Created default configuration file at: $settingsFile" -ForegroundColor Green
+$apiUrl = "https://localhost:3000"
+$token = "secure-token-123"
+
+$envPath = Join-Path $PSScriptRoot "..\.env"
+if (Test-Path $envPath) {
+    Get-Content $envPath | ForEach-Object {
+        if ($_ -match "^\s*(PORT)\s*=\s*(.+)") {
+            $apiUrl = "https://localhost:$($Matches[2].Trim().Trim("'").Trim('"'))"
+        }
+        elseif ($_ -match "^\s*(API_URL|BACKEND_URL|HOST_URL)\s*=\s*(.+)") {
+            $apiUrl = $Matches[2].Trim().Trim("'").Trim('"')
+        }
+        elseif ($_ -match "^\s*(CLIENT_TOKEN|CLIENT_ACCESS_TOKEN)\s*=\s*(.+)") {
+            $token = $Matches[2].Trim().Trim("'").Trim('"')
+        }
+    }
 }
+
+Set-Content -Path $settingsFile -Value @("API_URL=$apiUrl", "TOKEN=$token")
+Write-Host "[OK] Written configuration file at: $settingsFile" -ForegroundColor Green
 
 Write-Host "========================================================" -ForegroundColor Green
 Write-Host "INSTALLATION COMPLETED!" -ForegroundColor Green
