@@ -1103,7 +1103,13 @@ namespace AITranslateCore
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072; // TLS 1.2
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serverUrl + "/api/translate");
+            string targetUrl = serverUrl;
+            if (!targetUrl.EndsWith("/api/translate"))
+            {
+                targetUrl = targetUrl.TrimEnd('/') + "/api/translate";
+            }
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(targetUrl);
             request.Method = "POST";
             request.ContentType = "application/json";
             request.Headers.Add("Authorization", "Bearer " + clientToken);

@@ -541,6 +541,9 @@ namespace AITranslateVSTOInstaller
                 try
                 {
                     string[] lines = File.ReadAllLines(envPath);
+                    string portVal = null;
+                    string customUrl = null;
+
                     foreach (string line in lines)
                     {
                         if (line.Contains("="))
@@ -549,15 +552,34 @@ namespace AITranslateVSTOInstaller
                             string key = line.Substring(0, idx).Trim();
                             string val = line.Substring(idx + 1).Trim();
 
+                            // Strip quotes if present
+                            if ((val.StartsWith("\"") && val.EndsWith("\"")) || (val.StartsWith("'") && val.EndsWith("'")))
+                            {
+                                val = val.Substring(1, val.Length - 2);
+                            }
+
                             if (key == "PORT")
                             {
-                                apiUrl = "https://localhost:" + val;
+                                portVal = val;
+                            }
+                            else if (key == "API_URL" || key == "BACKEND_URL" || key == "HOST_URL")
+                            {
+                                customUrl = val;
                             }
                             else if (key == "CLIENT_TOKEN" || key == "CLIENT_ACCESS_TOKEN")
                             {
                                 token = val;
                             }
                         }
+                    }
+
+                    if (!string.IsNullOrEmpty(customUrl))
+                    {
+                        apiUrl = customUrl;
+                    }
+                    else if (!string.IsNullOrEmpty(portVal))
+                    {
+                        apiUrl = "https://localhost:" + portVal;
                     }
                 }
                 catch { }
