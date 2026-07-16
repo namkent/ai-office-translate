@@ -125,10 +125,76 @@ if ($LASTEXITCODE -eq 0) {
     # Copy certificate to publish directory
     Copy-Item $pfxFile -Destination $publishDir -Force
 
+    # 5. Compile Setup.cs into single-file setup.exe
+    Write-Host "Compiling native installer (setup.exe) for VSTO..." -ForegroundColor Yellow
+    $csc = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
+    if (-not (Test-Path $csc)) {
+        $csc = "C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe"
+    }
+
+    if (Test-Path $csc) {
+        $setupSource = Join-Path $scriptDir "Setup.cs"
+        $outputExe = Join-Path $scriptDir "setup.exe"
+        $iconIco = Join-Path $scriptDir "icon.ico"
+        
+        # Copy icon from com-version if available
+        $sourceIconIco = Join-Path $scriptDir "../com-version/scripts/icon.ico"
+        if (Test-Path $sourceIconIco) {
+            Copy-Item $sourceIconIco -Destination $iconIco -Force
+        }
+        $sourceIconPng = Join-Path $scriptDir "../icon.png"
+        $destIconPng = Join-Path $scriptDir "icon.png"
+        if (Test-Path $sourceIconPng) {
+            Copy-Item $sourceIconPng -Destination $destIconPng -Force
+        }
+
+        # Build resources arguments
+        $resourceArgs = @(
+            "/resource:`"$pfxFile`",AITranslate.pfx",
+            "/resource:`"$(Join-Path $publishDir "AITranslateExcel\AITranslateExcel.dll")`",AITranslateExcel.dll",
+            "/resource:`"$(Join-Path $publishDir "AITranslateExcel\AITranslateExcel.dll.manifest")`",AITranslateExcel.dll.manifest",
+            "/resource:`"$(Join-Path $publishDir "AITranslateExcel\AITranslateExcel.vsto")`",AITranslateExcel.vsto",
+            "/resource:`"$(Join-Path $publishDir "AITranslateWord\AITranslateWord.dll")`",AITranslateWord.dll",
+            "/resource:`"$(Join-Path $publishDir "AITranslateWord\AITranslateWord.dll.manifest")`",AITranslateWord.dll.manifest",
+            "/resource:`"$(Join-Path $publishDir "AITranslateWord\AITranslateWord.vsto")`",AITranslateWord.vsto",
+            "/resource:`"$(Join-Path $publishDir "AITranslatePPT\AITranslatePPT.dll")`",AITranslatePPT.dll",
+            "/resource:`"$(Join-Path $publishDir "AITranslatePPT\AITranslatePPT.dll.manifest")`",AITranslatePPT.dll.manifest",
+            "/resource:`"$(Join-Path $publishDir "AITranslatePPT\AITranslatePPT.vsto")`",AITranslatePPT.vsto"
+        )
+
+        $iconArg = ""
+        if (Test-Path $iconIco) {
+            $iconArg = "/win32icon:`"$iconIco`""
+            $resourceArgs += "/resource:`"$iconIco`",icon.ico"
+        }
+        if (Test-Path $destIconPng) {
+            $resourceArgs += "/resource:`"$destIconPng`",icon.png"
+        }
+
+        # Run csc
+        $cscArgs = @("/target:winexe", "/out:`"$outputExe`"")
+        if ($iconArg -ne "") { $cscArgs += $iconArg }
+        $cscArgs += $resourceArgs
+        $cscArgs += "`"$setupSource`""
+
+        # Execute compilation
+        Write-Host "Compiling setup.exe using: $csc" -ForegroundColor Gray
+        & $csc $cscArgs
+        
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "-> Successfully compiled single-file installer: $outputExe" -ForegroundColor Green
+        } else {
+            Write-Error "Failed to compile setup.exe installer"
+            Exit 1
+        }
+    } else {
+        Write-Warning "csc.exe compiler not found, skipping setup.exe installer creation."
+    }
+
     Write-Host "========================================================" -ForegroundColor Green
     Write-Host "BUILD AND PUBLISH SUCCESSFUL!" -ForegroundColor Green
     Write-Host "Artifacts are stored at: $publishDir" -ForegroundColor Green
-    Write-Host "You can copy this 'publish' directory to your corporate machine to install." -ForegroundColor Green
+    Write-Host "Single-file installer is ready at: $outputExe" -ForegroundColor Green
     Write-Host "========================================================" -ForegroundColor Green
 } else {
     Write-Error "Build failed!"
