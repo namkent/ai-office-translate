@@ -51,6 +51,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Tools">
       <HintPath>..\lib\Microsoft.Office.Tools.dll</HintPath>
       <Private>True</Private>
@@ -95,7 +96,7 @@
     </Compile>
   </ItemGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>AITranslateWord_TemporaryKey.pfx</ManifestKeyFile>

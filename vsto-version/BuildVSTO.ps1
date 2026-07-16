@@ -11,6 +11,7 @@ Write-Host "========================================================" -Foregroun
 # 1. Create Self-Signed Code Signing Certificate (.pfx)
 $pfxFile = Join-Path $scriptDir "AITranslate.pfx"
 $passwordText = "secure-password-123"
+$thumbprint = ""
 
 if (-not (Test-Path $pfxFile)) {
     Write-Host "Generating self-signed code signing certificate..." -ForegroundColor Yellow
@@ -27,7 +28,8 @@ if (-not (Test-Path $pfxFile)) {
         Export-PfxCertificate -Cert $cert -FilePath $pfxFile -Password $pwd
         
         # Import to CurrentUser My store so MSBuild doesn't prompt for password
-        Import-PfxCertificate -FilePath $pfxFile -CertStoreLocation "Cert:\CurrentUser\My" -Password $pwd | Out-Null
+        $importedCerts = Import-PfxCertificate -FilePath $pfxFile -CertStoreLocation "Cert:\CurrentUser\My" -Password $pwd
+        $thumbprint = ($importedCerts | Select-Object -First 1).Thumbprint
         
         Write-Host "-> Created and imported certificate: $pfxFile" -ForegroundColor Green
     }
@@ -38,10 +40,20 @@ if (-not (Test-Path $pfxFile)) {
     Write-Host "-> Certificate already exists: $pfxFile" -ForegroundColor Gray
     try {
         $pwd = ConvertTo-SecureString -String $passwordText -Force -AsPlainText
-        Import-PfxCertificate -FilePath $pfxFile -CertStoreLocation "Cert:\CurrentUser\My" -Password $pwd | Out-Null
-        Write-Host "-> Verified and imported existing certificate into store." -ForegroundColor Green
+        $importedCerts = Import-PfxCertificate -FilePath $pfxFile -CertStoreLocation "Cert:\CurrentUser\My" -Password $pwd
+        $thumbprint = ($importedCerts | Select-Object -First 1).Thumbprint
+        Write-Host "-> Verified and imported existing certificate into store. Thumbprint: $thumbprint" -ForegroundColor Green
     } catch {
         Write-Warning "Could not import existing certificate: $($_.Exception.Message)"
+    }
+}
+
+if (-not $thumbprint) {
+    # Try fallback to find subject cert in My store
+    $fallbackCert = Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object { $_.Subject -like "*CN=AI Office Translate*" } | Select-Object -First 1
+    if ($fallbackCert) {
+        $thumbprint = $fallbackCert.Thumbprint
+        Write-Host "-> Found fallback certificate in store. Thumbprint: $thumbprint" -ForegroundColor Green
     }
 }
 
@@ -94,7 +106,7 @@ Write-Host "Using MSBuild from: $msbuild" -ForegroundColor Gray
 Write-Host "Building Visual Studio VSTO solution..." -ForegroundColor Yellow
 $slnPath = Join-Path $scriptDir "AITranslateAddin.sln"
 
-& $msbuild $slnPath /t:Rebuild /p:Configuration=Release /p:SignManifests=false
+& $msbuild $slnPath /t:Rebuild /p:Configuration=Release /p:SignManifests=true /p:ManifestKeyFile="" /p:ManifestCertificateThumbprint="$thumbprint"
 
 if ($LASTEXITCODE -eq 0) {
     # 4. Copy build artifacts to the common publish directory
@@ -159,7 +171,16 @@ if ($LASTEXITCODE -eq 0) {
             "/resource:`"$(Join-Path $publishDir "AITranslateWord\AITranslateWord.vsto")`",AITranslateWord.vsto",
             "/resource:`"$(Join-Path $publishDir "AITranslatePPT\AITranslatePPT.dll")`",AITranslatePPT.dll",
             "/resource:`"$(Join-Path $publishDir "AITranslatePPT\AITranslatePPT.dll.manifest")`",AITranslatePPT.dll.manifest",
-            "/resource:`"$(Join-Path $publishDir "AITranslatePPT\AITranslatePPT.vsto")`",AITranslatePPT.vsto"
+            "/resource:`"$(Join-Path $publishDir "AITranslatePPT\AITranslatePPT.vsto")`",AITranslatePPT.vsto",
+            "/resource:`"$(Join-Path $scriptDir "lib\Microsoft.Office.Tools.Common.dll")`",Microsoft.Office.Tools.Common.dll",
+            "/resource:`"$(Join-Path $scriptDir "lib\Microsoft.Office.Tools.Common.v4.0.Utilities.dll")`",Microsoft.Office.Tools.Common.v4.0.Utilities.dll",
+            "/resource:`"$(Join-Path $scriptDir "lib\Microsoft.Office.Tools.dll")`",Microsoft.Office.Tools.dll",
+            "/resource:`"$(Join-Path $scriptDir "lib\Microsoft.Office.Tools.v4.0.Framework.dll")`",Microsoft.Office.Tools.v4.0.Framework.dll",
+            "/resource:`"$(Join-Path $scriptDir "lib\Microsoft.VisualStudio.Tools.Applications.Runtime.dll")`",Microsoft.VisualStudio.Tools.Applications.Runtime.dll",
+            "/resource:`"$(Join-Path $scriptDir "lib\Microsoft.Office.Tools.Excel.dll")`",Microsoft.Office.Tools.Excel.dll",
+            "/resource:`"$(Join-Path $scriptDir "lib\Microsoft.Office.Tools.Excel.v4.0.Utilities.dll")`",Microsoft.Office.Tools.Excel.v4.0.Utilities.dll",
+            "/resource:`"$(Join-Path $scriptDir "lib\Microsoft.Office.Tools.Word.dll")`",Microsoft.Office.Tools.Word.dll",
+            "/resource:`"$(Join-Path $scriptDir "lib\Microsoft.Office.Tools.Word.v4.0.Utilities.dll")`",Microsoft.Office.Tools.Word.v4.0.Utilities.dll"
         )
 
         $iconArg = ""

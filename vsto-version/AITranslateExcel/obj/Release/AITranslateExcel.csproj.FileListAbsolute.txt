@@ -1,2 +1,16 @@
 P:\web\translate-plugin\vsto-version\AITranslateExcel\obj\Release\AITranslateExcel.csproj.AssemblyReference.cache
 P:\web\translate-plugin\vsto-version\AITranslateExcel\obj\Release\AITranslateExcel.csproj.CoreCompileInputs.cache
+P:\web\translate-plugin\vsto-version\AITranslateExcel\bin\Release\AITranslateExcel.dll
+P:\web\translate-plugin\vsto-version\AITranslateExcel\bin\Release\AITranslateExcel.pdb
+P:\web\translate-plugin\vsto-version\AITranslateExcel\bin\Release\Microsoft.Office.Tools.Common.dll
+P:\web\translate-plugin\vsto-version\AITranslateExcel\bin\Release\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+P:\web\translate-plugin\vsto-version\AITranslateExcel\bin\Release\Microsoft.Office.Tools.dll
+P:\web\translate-plugin\vsto-version\AITranslateExcel\bin\Release\Microsoft.Office.Tools.Excel.dll
+P:\web\translate-plugin\vsto-version\AITranslateExcel\bin\Release\Microsoft.Office.Tools.Excel.v4.0.Utilities.dll
+P:\web\translate-plugin\vsto-version\AITranslateExcel\bin\Release\Microsoft.Office.Tools.v4.0.Framework.dll
+P:\web\translate-plugin\vsto-version\AITranslateExcel\bin\Release\Microsoft.VisualStudio.Tools.Applications.Runtime.dll
+P:\web\translate-plugin\vsto-version\AITranslateExcel\obj\Release\AITransl.8A3D083C.Up2Date
+P:\web\translate-plugin\vsto-version\AITranslateExcel\obj\Release\AITranslateExcel.dll
+P:\web\translate-plugin\vsto-version\AITranslateExcel\obj\Release\AITranslateExcel.pdb
+P:\web\translate-plugin\vsto-version\AITranslateExcel\bin\Release\AITranslateExcel.dll.manifest
+P:\web\translate-plugin\vsto-version\AITranslateExcel\bin\Release\AITranslateExcel.vsto

@@ -8,20 +8,19 @@ Write-Host "UNINSTALLING VSTO ADD-INS..." -ForegroundColor Cyan
 Write-Host "========================================================" -ForegroundColor Cyan
 
 $apps = @(
-    @{ Name = "Excel"; RegName = "AITranslate.Excel" },
-    @{ Name = "Word"; RegName = "AITranslate.Word" },
-    @{ Name = "PowerPoint"; RegName = "AITranslate.PPT" }
+    @{ Name = "Excel"; RegNames = @("AITranslateExcel", "AITranslate.Excel") },
+    @{ Name = "Word"; RegNames = @("AITranslateWord", "AITranslate.Word") },
+    @{ Name = "PowerPoint"; RegNames = @("AITranslatePPT", "AITranslate.PPT") }
 )
 
 foreach ($app in $apps) {
-    $regPath = "HKCU:\Software\Microsoft\Office\$($app.Name)\Addins\$($app.RegName)"
-    
-    if (Test-Path $regPath) {
-        Write-Host "Removing registry keys for $($app.Name)..." -ForegroundColor Yellow
-        Remove-Item -Path $regPath -Recurse -Force
-        Write-Host "[OK] Unregistered $($app.Name) add-in." -ForegroundColor Green
-    } else {
-        Write-Host "[SKIP] No registration found for $($app.Name)." -ForegroundColor Gray
+    foreach ($regName in $app.RegNames) {
+        $regPath = "HKCU:\Software\Microsoft\Office\$($app.Name)\Addins\$regName"
+        if (Test-Path $regPath) {
+            Write-Host "Removing registry keys for $($app.Name) ($regName)..." -ForegroundColor Yellow
+            Remove-Item -Path $regPath -Recurse -Force
+            Write-Host "[OK] Unregistered $($app.Name) ($regName) add-in." -ForegroundColor Green
+        }
     }
 }
 

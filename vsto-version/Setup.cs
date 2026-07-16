@@ -120,7 +120,7 @@ namespace AITranslateVSTOInstaller
 
         private void InitializeComponent()
         {
-            this.Text = "AI Translate VSTO Installer";
+            this.Text = "AI Office Translate Installer";
             this.ClientSize = new Size(480, 227);
             this.FormBorderStyle = FormBorderStyle.None;
             this.ShowInTaskbar = true;
@@ -142,7 +142,7 @@ namespace AITranslateVSTOInstaller
 
             // Title Text Label
             lblTitleText = new Label();
-            lblTitleText.Text = "AI Translate VSTO Installer (No Admin)";
+            lblTitleText.Text = "AI Office Translate Installer";
             lblTitleText.Font = new Font("Segoe UI", 9, FontStyle.Regular);
             lblTitleText.ForeColor = Color.FromArgb(27, 27, 27);
             lblTitleText.Location = new Point(32, 7);
@@ -177,7 +177,7 @@ namespace AITranslateVSTOInstaller
 
             // Title Label
             lblTitle = new Label();
-            lblTitle.Text = "AI Office Translate (VSTO)";
+            lblTitle.Text = "AI Office Translate";
             lblTitle.Font = new Font("Segoe UI Semibold", 16, FontStyle.Bold);
             lblTitle.ForeColor = Color.FromArgb(27, 27, 27);
             lblTitle.Location = new Point(30, 57);
@@ -185,7 +185,7 @@ namespace AITranslateVSTOInstaller
 
             // Subtitle Label
             lblSubtitle = new Label();
-            lblSubtitle.Text = "Modern VSTO Add-in deployment for Enterprise Office";
+            lblSubtitle.Text = "Smart MS Office translation solution by Namkent";
             lblSubtitle.Font = new Font("Segoe UI", 9, FontStyle.Regular);
             lblSubtitle.ForeColor = Color.FromArgb(95, 95, 95);
             lblSubtitle.Location = new Point(32, 89);
@@ -193,7 +193,7 @@ namespace AITranslateVSTOInstaller
 
             // Status Label
             lblStatus = new Label();
-            lblStatus.Text = "Ready to install or uninstall the VSTO add-in.";
+            lblStatus.Text = "Ready to install or uninstall the translate add-in.";
             lblStatus.Font = new Font("Segoe UI", 9, FontStyle.Regular);
             lblStatus.ForeColor = Color.FromArgb(95, 95, 95);
             lblStatus.Location = new Point(32, 117);
@@ -333,7 +333,7 @@ namespace AITranslateVSTOInstaller
                     Directory.CreateDirectory(targetDir);
                 }
 
-                SetStatus("Extracting VSTO binary packages...", 50, false);
+                SetStatus("Extracting AI Translate binary packages...", 50, false);
                 // Extract PFX
                 string pfxPath = Path.Combine(targetDir, "AITranslate.pfx");
                 ExtractResource("AITranslate.pfx", pfxPath);
@@ -344,6 +344,13 @@ namespace AITranslateVSTOInstaller
                 ExtractResource("AITranslateExcel.dll", Path.Combine(excelDir, "AITranslateExcel.dll"));
                 ExtractResource("AITranslateExcel.dll.manifest", Path.Combine(excelDir, "AITranslateExcel.dll.manifest"));
                 ExtractResource("AITranslateExcel.vsto", Path.Combine(excelDir, "AITranslateExcel.vsto"));
+                ExtractResource("Microsoft.Office.Tools.Common.dll", Path.Combine(excelDir, "Microsoft.Office.Tools.Common.dll"));
+                ExtractResource("Microsoft.Office.Tools.Common.v4.0.Utilities.dll", Path.Combine(excelDir, "Microsoft.Office.Tools.Common.v4.0.Utilities.dll"));
+                ExtractResource("Microsoft.Office.Tools.dll", Path.Combine(excelDir, "Microsoft.Office.Tools.dll"));
+                ExtractResource("Microsoft.Office.Tools.v4.0.Framework.dll", Path.Combine(excelDir, "Microsoft.Office.Tools.v4.0.Framework.dll"));
+                ExtractResource("Microsoft.VisualStudio.Tools.Applications.Runtime.dll", Path.Combine(excelDir, "Microsoft.VisualStudio.Tools.Applications.Runtime.dll"));
+                ExtractResource("Microsoft.Office.Tools.Excel.dll", Path.Combine(excelDir, "Microsoft.Office.Tools.Excel.dll"));
+                ExtractResource("Microsoft.Office.Tools.Excel.v4.0.Utilities.dll", Path.Combine(excelDir, "Microsoft.Office.Tools.Excel.v4.0.Utilities.dll"));
 
                 // Extract Word Add-in
                 string wordDir = Path.Combine(targetDir, "AITranslateWord");
@@ -351,6 +358,13 @@ namespace AITranslateVSTOInstaller
                 ExtractResource("AITranslateWord.dll", Path.Combine(wordDir, "AITranslateWord.dll"));
                 ExtractResource("AITranslateWord.dll.manifest", Path.Combine(wordDir, "AITranslateWord.dll.manifest"));
                 ExtractResource("AITranslateWord.vsto", Path.Combine(wordDir, "AITranslateWord.vsto"));
+                ExtractResource("Microsoft.Office.Tools.Common.dll", Path.Combine(wordDir, "Microsoft.Office.Tools.Common.dll"));
+                ExtractResource("Microsoft.Office.Tools.Common.v4.0.Utilities.dll", Path.Combine(wordDir, "Microsoft.Office.Tools.Common.v4.0.Utilities.dll"));
+                ExtractResource("Microsoft.Office.Tools.dll", Path.Combine(wordDir, "Microsoft.Office.Tools.dll"));
+                ExtractResource("Microsoft.Office.Tools.v4.0.Framework.dll", Path.Combine(wordDir, "Microsoft.Office.Tools.v4.0.Framework.dll"));
+                ExtractResource("Microsoft.VisualStudio.Tools.Applications.Runtime.dll", Path.Combine(wordDir, "Microsoft.VisualStudio.Tools.Applications.Runtime.dll"));
+                ExtractResource("Microsoft.Office.Tools.Word.dll", Path.Combine(wordDir, "Microsoft.Office.Tools.Word.dll"));
+                ExtractResource("Microsoft.Office.Tools.Word.v4.0.Utilities.dll", Path.Combine(wordDir, "Microsoft.Office.Tools.Word.v4.0.Utilities.dll"));
 
                 // Extract PowerPoint Add-in
                 string pptDir = Path.Combine(targetDir, "AITranslatePPT");
@@ -358,6 +372,11 @@ namespace AITranslateVSTOInstaller
                 ExtractResource("AITranslatePPT.dll", Path.Combine(pptDir, "AITranslatePPT.dll"));
                 ExtractResource("AITranslatePPT.dll.manifest", Path.Combine(pptDir, "AITranslatePPT.dll.manifest"));
                 ExtractResource("AITranslatePPT.vsto", Path.Combine(pptDir, "AITranslatePPT.vsto"));
+                ExtractResource("Microsoft.Office.Tools.Common.dll", Path.Combine(pptDir, "Microsoft.Office.Tools.Common.dll"));
+                ExtractResource("Microsoft.Office.Tools.Common.v4.0.Utilities.dll", Path.Combine(pptDir, "Microsoft.Office.Tools.Common.v4.0.Utilities.dll"));
+                ExtractResource("Microsoft.Office.Tools.dll", Path.Combine(pptDir, "Microsoft.Office.Tools.dll"));
+                ExtractResource("Microsoft.Office.Tools.v4.0.Framework.dll", Path.Combine(pptDir, "Microsoft.Office.Tools.v4.0.Framework.dll"));
+                ExtractResource("Microsoft.VisualStudio.Tools.Applications.Runtime.dll", Path.Combine(pptDir, "Microsoft.VisualStudio.Tools.Applications.Runtime.dll"));
 
                 SetStatus("Importing self-signed certificate (Trusting)...", 75, true);
                 TrustCertificate(pfxPath);
@@ -365,13 +384,13 @@ namespace AITranslateVSTOInstaller
                 SetStatus("Writing settings configuration...", 85, false);
                 WriteSettings(targetDir);
 
-                SetStatus("Registering VSTO manifests in registry...", 90, false);
+                SetStatus("Registering AI Translate manifests in registry...", 90, false);
                 ConfigureRegistry(targetDir);
 
                 SetStatus("Installation Successful!", 100, false);
                 SetControlsEnabled(true);
                 this.Invoke(new Action(() => {
-                    MessageBox.Show(this, "AI Office Translate VSTO Add-ins have been successfully installed!\nPlease restart Excel, Word, and PowerPoint.", "Installation Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(this, "AI Office Translate Add-ins have been successfully installed!\nPlease restart Excel, Word, and PowerPoint.", "Installation Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }));
             }
             catch (Exception ex)
@@ -418,7 +437,7 @@ namespace AITranslateVSTOInstaller
                 SetStatus("Uninstall Successful!", 100, false);
                 SetControlsEnabled(true);
                 this.Invoke(new Action(() => {
-                    MessageBox.Show(this, "AI Office Translate VSTO Add-ins have been successfully uninstalled.", "Uninstall Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(this, "AI Office Translate Add-ins have been successfully uninstalled.", "Uninstall Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }));
             }
             catch (Exception ex)
@@ -557,9 +576,9 @@ namespace AITranslateVSTOInstaller
         private void ConfigureRegistry(string targetDir)
         {
             var apps = new[] {
-                new { Name = "Excel", Proj = "AITranslateExcel", RegName = "AITranslate.Excel", Desc = "Excel Translation Add-in using AI" },
-                new { Name = "Word", Proj = "AITranslateWord", RegName = "AITranslate.Word", Desc = "Word Translation Add-in using AI" },
-                new { Name = "PowerPoint", Proj = "AITranslatePPT", RegName = "AITranslate.PPT", Desc = "PowerPoint Translation Add-in using AI" }
+                new { Name = "Excel", Proj = "AITranslateExcel", RegName = "AITranslateExcel", Desc = "Excel Translation Add-in using AI" },
+                new { Name = "Word", Proj = "AITranslateWord", RegName = "AITranslateWord", Desc = "Word Translation Add-in using AI" },
+                new { Name = "PowerPoint", Proj = "AITranslatePPT", RegName = "AITranslatePPT", Desc = "PowerPoint Translation Add-in using AI" }
             };
 
             foreach (var app in apps)
@@ -581,8 +600,11 @@ namespace AITranslateVSTOInstaller
         private void CleanRegistry()
         {
             string[] paths = {
+                @"Software\Microsoft\Office\Excel\Addins\AITranslateExcel",
                 @"Software\Microsoft\Office\Excel\Addins\AITranslate.Excel",
+                @"Software\Microsoft\Office\Word\Addins\AITranslateWord",
                 @"Software\Microsoft\Office\Word\Addins\AITranslate.Word",
+                @"Software\Microsoft\Office\PowerPoint\Addins\AITranslatePPT",
                 @"Software\Microsoft\Office\PowerPoint\Addins\AITranslate.PPT"
             };
 

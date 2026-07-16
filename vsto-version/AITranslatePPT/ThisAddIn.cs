@@ -3,30 +3,41 @@ using Microsoft.Office.Tools;
 
 namespace AITranslatePPT
 {
+    [global::Microsoft.VisualStudio.Tools.Applications.Runtime.StartupObjectAttribute(0)]
     public partial class ThisAddIn : Microsoft.Office.Tools.AddInBase
     {
         private AITranslateCore.AITranslateCore core;
 
-        public ThisAddIn(global::Microsoft.Office.Tools.ApplicationFactory factory, global::System.IServiceProvider serviceProvider) 
+        public ThisAddIn(global::Microsoft.Office.Tools.Factory factory, global::System.IServiceProvider serviceProvider) 
             : base(factory, serviceProvider, "AddIn", "ThisAddIn")
         {
         }
 
+        public global::Microsoft.Office.Interop.PowerPoint.Application Application { get; private set; }
+
         protected override void Initialize()
         {
             base.Initialize();
+            this.Application = this.GetHostItem<global::Microsoft.Office.Interop.PowerPoint.Application>(typeof(global::Microsoft.Office.Interop.PowerPoint.Application), "Application");
             Globals.ThisAddIn = this;
         }
 
         protected override void FinishInitialization()
         {
-            base.FinishInitialization();
             this.InternalStartup();
+            this.OnStartup();
         }
 
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {
-            core = new AITranslateCore.AITranslateCore(this.Application, "PPT");
+            if (core == null)
+            {
+                core = new AITranslateCore.AITranslateCore(this.Application, "PPT");
+            }
+            else
+            {
+                core.SetApplication(this.Application);
+            }
         }
 
         private void ThisAddIn_Shutdown(object sender, EventArgs e)

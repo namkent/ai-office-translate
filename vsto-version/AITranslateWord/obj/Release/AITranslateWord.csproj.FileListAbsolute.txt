@@ -1,2 +1,16 @@
 P:\web\translate-plugin\vsto-version\AITranslateWord\obj\Release\AITranslateWord.csproj.AssemblyReference.cache
 P:\web\translate-plugin\vsto-version\AITranslateWord\obj\Release\AITranslateWord.csproj.CoreCompileInputs.cache
+P:\web\translate-plugin\vsto-version\AITranslateWord\bin\Release\AITranslateWord.dll
+P:\web\translate-plugin\vsto-version\AITranslateWord\bin\Release\AITranslateWord.pdb
+P:\web\translate-plugin\vsto-version\AITranslateWord\bin\Release\Microsoft.Office.Tools.Common.dll
+P:\web\translate-plugin\vsto-version\AITranslateWord\bin\Release\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+P:\web\translate-plugin\vsto-version\AITranslateWord\bin\Release\Microsoft.Office.Tools.dll
+P:\web\translate-plugin\vsto-version\AITranslateWord\bin\Release\Microsoft.Office.Tools.v4.0.Framework.dll
+P:\web\translate-plugin\vsto-version\AITranslateWord\bin\Release\Microsoft.Office.Tools.Word.dll
+P:\web\translate-plugin\vsto-version\AITranslateWord\bin\Release\Microsoft.Office.Tools.Word.v4.0.Utilities.dll
+P:\web\translate-plugin\vsto-version\AITranslateWord\bin\Release\Microsoft.VisualStudio.Tools.Applications.Runtime.dll
+P:\web\translate-plugin\vsto-version\AITranslateWord\obj\Release\AITransl.74C8726C.Up2Date
+P:\web\translate-plugin\vsto-version\AITranslateWord\obj\Release\AITranslateWord.dll
+P:\web\translate-plugin\vsto-version\AITranslateWord\obj\Release\AITranslateWord.pdb
+P:\web\translate-plugin\vsto-version\AITranslateWord\bin\Release\AITranslateWord.dll.manifest
+P:\web\translate-plugin\vsto-version\AITranslateWord\bin\Release\AITranslateWord.vsto

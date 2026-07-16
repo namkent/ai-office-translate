@@ -3,7 +3,8 @@ using Microsoft.Office.Tools.Word;
 
 namespace AITranslateWord
 {
-    public partial class ThisAddIn : Microsoft.Office.Tools.Word.WordAddInBase
+    [global::Microsoft.VisualStudio.Tools.Applications.Runtime.StartupObjectAttribute(0)]
+    public partial class ThisAddIn : Microsoft.Office.Tools.AddInBase
     {
         private AITranslateCore.AITranslateCore core;
 
@@ -12,21 +13,31 @@ namespace AITranslateWord
         {
         }
 
+        public global::Microsoft.Office.Interop.Word.Application Application { get; private set; }
+
         protected override void Initialize()
         {
             base.Initialize();
+            this.Application = this.GetHostItem<global::Microsoft.Office.Interop.Word.Application>(typeof(global::Microsoft.Office.Interop.Word.Application), "Application");
             Globals.ThisAddIn = this;
         }
 
         protected override void FinishInitialization()
         {
-            base.FinishInitialization();
             this.InternalStartup();
+            this.OnStartup();
         }
 
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {
-            core = new AITranslateCore.AITranslateCore(this.Application, "Word");
+            if (core == null)
+            {
+                core = new AITranslateCore.AITranslateCore(this.Application, "Word");
+            }
+            else
+            {
+                core.SetApplication(this.Application);
+            }
         }
 
         private void ThisAddIn_Shutdown(object sender, EventArgs e)

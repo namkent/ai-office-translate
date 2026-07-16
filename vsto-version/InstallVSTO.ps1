@@ -43,9 +43,9 @@ if (Test-Path $pfxFile) {
 
 # 2. Register Add-ins in Registry (CurrentUser)
 $apps = @(
-    @{ Name = "Excel"; Proj = "AITranslateExcel"; RegName = "AITranslate.Excel"; Desc = "Excel Translation Add-in using AI" },
-    @{ Name = "Word"; Proj = "AITranslateWord"; RegName = "AITranslate.Word"; Desc = "Word Translation Add-in using AI" },
-    @{ Name = "PowerPoint"; Proj = "AITranslatePPT"; RegName = "AITranslate.PPT"; Desc = "PowerPoint Translation Add-in using AI" }
+    @{ Name = "Excel"; Proj = "AITranslateExcel"; RegName = "AITranslateExcel"; Desc = "Excel Translation Add-in using AI" },
+    @{ Name = "Word"; Proj = "AITranslateWord"; RegName = "AITranslateWord"; Desc = "Word Translation Add-in using AI" },
+    @{ Name = "PowerPoint"; Proj = "AITranslatePPT"; RegName = "AITranslatePPT"; Desc = "PowerPoint Translation Add-in using AI" }
 )
 
 foreach ($app in $apps) {

@@ -11,12 +11,24 @@ if (-not (Test-Path $libDir)) {
 }
 
 # Standard search paths for VSTO reference assemblies
-$searchPaths = @(
-    "C:\Program Files (x86)\Reference Assemblies\Microsoft\VSTO40\v4.0.Framework",
-    "C:\Program Files\Common Files\Microsoft Shared\VSTO\10.0",
-    "C:\Program Files (x86)\Common Files\Microsoft Shared\VSTO\10.0",
-    "C:\Windows\Microsoft.NET\assembly\GAC_MSIL"
-)
+$searchPaths = [System.Collections.Generic.List[string]]::new()
+$searchPaths.Add("C:\Program Files (x86)\Reference Assemblies\Microsoft\VSTO40\v4.0.Framework")
+$searchPaths.Add("C:\Program Files\Common Files\Microsoft Shared\VSTO\10.0")
+$searchPaths.Add("C:\Program Files (x86)\Common Files\Microsoft Shared\VSTO\10.0")
+$searchPaths.Add("C:\Windows\Microsoft.NET\assembly\GAC_MSIL")
+
+# Dynamically locate Visual Studio reference assemblies directory
+$vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+if (Test-Path $vswhere) {
+    $vsPath = & $vswhere -latest -products * -property installationPath
+    if ($vsPath) {
+        $vsRefDir = Join-Path $vsPath "Common7\IDE\ReferenceAssemblies"
+        if (Test-Path $vsRefDir) {
+            $searchPaths.Add($vsRefDir)
+            Write-Host "-> Added Visual Studio reference directory to search path: $vsRefDir" -ForegroundColor Gray
+        }
+    }
+}
 
 # DLLs we want to extract
 $dllNames = @(

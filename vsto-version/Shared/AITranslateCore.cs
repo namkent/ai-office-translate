@@ -34,6 +34,11 @@ namespace AITranslateCore
             LoadSettings();
         }
 
+        public void SetApplication(object Application)
+        {
+            app = Application;
+        }
+
         // Tự động tải cài đặt Token và URL cục bộ
         private void LoadSettings()
         {
@@ -87,8 +92,8 @@ namespace AITranslateCore
                                 <dropDown id='dropTarget' label='To' getSelectedItemIndex='GetSelectedTargetIndex' onAction='OnTargetSelected' getItemCount='GetTargetItemCount' getItemLabel='GetTargetItemLabel' getItemID='GetTargetItemID'>
                                 </dropDown>
                                 <button id='btnSelection' label='Translate Selection' size='large' onAction='OnAction' tag='selection' imageMso='Translate' />
-                                <button id='btnActive' label='" + activeLabel + @"' size='large' onAction='OnAction' tag='active' imageMso='PageSetupPageDialog' />
-                                <button id='btnAll' label='Translate All' size='large' onAction='OnAction' tag='all' imageMso='WebPagePreview' />
+                                <button id='btnActive' label='" + activeLabel + @"' size='large' onAction='OnAction' tag='active' imageMso='TranslationPane' />
+                                <button id='btnAll' label='Translate All' size='large' onAction='OnAction' tag='all' imageMso='MiniTranslator' />
                                 <button id='btnUndo' label='Undo' size='large' onAction='OnUndoAction' imageMso='Undo' getEnabled='GetUndoEnabled' getVisible='GetUndoVisible' />
                                 <button id='btnRedo' label='Redo' size='large' onAction='OnRedoAction' imageMso='Redo' getEnabled='GetRedoEnabled' getVisible='GetRedoVisible' />
                             </group>

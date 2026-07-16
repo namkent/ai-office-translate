@@ -1,2 +1,14 @@
 P:\web\translate-plugin\vsto-version\AITranslatePPT\obj\Release\AITranslatePPT.csproj.AssemblyReference.cache
 P:\web\translate-plugin\vsto-version\AITranslatePPT\obj\Release\AITranslatePPT.csproj.CoreCompileInputs.cache
+P:\web\translate-plugin\vsto-version\AITranslatePPT\bin\Release\AITranslatePPT.dll
+P:\web\translate-plugin\vsto-version\AITranslatePPT\bin\Release\AITranslatePPT.pdb
+P:\web\translate-plugin\vsto-version\AITranslatePPT\bin\Release\Microsoft.Office.Tools.Common.dll
+P:\web\translate-plugin\vsto-version\AITranslatePPT\bin\Release\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+P:\web\translate-plugin\vsto-version\AITranslatePPT\bin\Release\Microsoft.Office.Tools.dll
+P:\web\translate-plugin\vsto-version\AITranslatePPT\bin\Release\Microsoft.Office.Tools.v4.0.Framework.dll
+P:\web\translate-plugin\vsto-version\AITranslatePPT\bin\Release\Microsoft.VisualStudio.Tools.Applications.Runtime.dll
+P:\web\translate-plugin\vsto-version\AITranslatePPT\obj\Release\AITransl.B37DA0DE.Up2Date
+P:\web\translate-plugin\vsto-version\AITranslatePPT\obj\Release\AITranslatePPT.dll
+P:\web\translate-plugin\vsto-version\AITranslatePPT\obj\Release\AITranslatePPT.pdb
+P:\web\translate-plugin\vsto-version\AITranslatePPT\bin\Release\AITranslatePPT.dll.manifest
+P:\web\translate-plugin\vsto-version\AITranslatePPT\bin\Release\AITranslatePPT.vsto
