@@ -525,7 +525,7 @@ namespace AITranslateVSTOInstaller
 
         private void WriteSettings(string targetDir)
         {
-            string apiUrl = "https://localhost:3000";
+            string apiUrl = "http://localhost:3000";
             string token = "secure-token-123";
 
             // Try to read .env from setup.exe directory
@@ -579,7 +579,7 @@ namespace AITranslateVSTOInstaller
                     }
                     else if (!string.IsNullOrEmpty(portVal))
                     {
-                        apiUrl = "https://localhost:" + portVal;
+                        apiUrl = "http://localhost:" + portVal;
                     }
                 }
                 catch { }

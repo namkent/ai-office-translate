@@ -20,7 +20,7 @@ namespace AITranslateCore
         protected static string selectedSource = "Auto Detect";
         protected static string selectedTarget = "Vietnamese";
 
-        protected string serverUrl = "https://localhost:3000";
+        protected string serverUrl = "http://localhost:3000";
         protected string clientToken = "secure-token-123";
 
         // Stacks lưu lịch sử dịch để Undo/Redo cho Excel

@@ -79,14 +79,14 @@ if (-not (Test-Path $appDataDir)) {
 }
 
 $settingsFile = Join-Path $appDataDir "settings.txt"
-$apiUrl = "https://localhost:3000"
+$apiUrl = "http://localhost:3000"
 $token = "secure-token-123"
 
 $envPath = Join-Path $PSScriptRoot "..\.env"
 if (Test-Path $envPath) {
     Get-Content $envPath | ForEach-Object {
         if ($_ -match "^\s*(PORT)\s*=\s*(.+)") {
-            $apiUrl = "https://localhost:$($Matches[2].Trim().Trim("'").Trim('"'))"
+            $apiUrl = "http://localhost:$($Matches[2].Trim().Trim("'").Trim('"'))"
         }
         elseif ($_ -match "^\s*(API_URL|BACKEND_URL|HOST_URL)\s*=\s*(.+)") {
             $apiUrl = $Matches[2].Trim().Trim("'").Trim('"')
