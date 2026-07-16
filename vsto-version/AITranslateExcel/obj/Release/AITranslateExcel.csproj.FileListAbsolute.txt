@@ -1,0 +1,2 @@
+P:\web\translate-plugin\vsto-version\AITranslateExcel\obj\Release\AITranslateExcel.csproj.AssemblyReference.cache
+P:\web\translate-plugin\vsto-version\AITranslateExcel\obj\Release\AITranslateExcel.csproj.CoreCompileInputs.cache

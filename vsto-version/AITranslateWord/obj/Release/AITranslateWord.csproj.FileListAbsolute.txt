@@ -1,0 +1,2 @@
+P:\web\translate-plugin\vsto-version\AITranslateWord\obj\Release\AITranslateWord.csproj.AssemblyReference.cache
+P:\web\translate-plugin\vsto-version\AITranslateWord\obj\Release\AITranslateWord.csproj.CoreCompileInputs.cache
