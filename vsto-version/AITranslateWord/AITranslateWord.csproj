@@ -51,11 +51,34 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
-    <Reference Include="Microsoft.Office.Tools.Common.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Office.Tools.Word, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Office.Tools.Word.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Office.Tools.v4.0.Framework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Tools.Applications.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Tools">
+      <HintPath>..\lib\Microsoft.Office.Tools.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Common">
+      <HintPath>..\lib\Microsoft.Office.Tools.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Common.v4.0.Utilities">
+      <HintPath>..\lib\Microsoft.Office.Tools.Common.v4.0.Utilities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Word">
+      <HintPath>..\lib\Microsoft.Office.Tools.Word.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Word.v4.0.Utilities">
+      <HintPath>..\lib\Microsoft.Office.Tools.Word.v4.0.Utilities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.v4.0.Framework">
+      <HintPath>..\lib\Microsoft.Office.Tools.v4.0.Framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Tools.Applications.Runtime">
+      <HintPath>..\lib\Microsoft.VisualStudio.Tools.Applications.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
