@@ -7,7 +7,7 @@ namespace AITranslatePPT
     {
         private AITranslateCore.AITranslateCore core;
 
-        public ThisAddIn(global::Microsoft.Office.Tools.Common.v4.0.ApplicationFactory factory, global::System.IServiceProvider serviceProvider) 
+        public ThisAddIn(global::Microsoft.Office.Tools.ApplicationFactory factory, global::System.IServiceProvider serviceProvider) 
             : base(factory, serviceProvider, "AddIn", "ThisAddIn")
         {
         }
