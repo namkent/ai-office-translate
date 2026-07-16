@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# Local Env
+.env
+
+# SSL Certs
+backend/key.pem
+backend/cert.pem
+
+# OS files
+.DS_Store
+Thumbs.db

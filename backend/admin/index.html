@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Translate - Admin Glossary Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-dark: #1e293b;
+      --border-dark: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #10b981;
+      --primary-hover: #059669;
+      --danger: #ef4444;
+      --danger-hover: #dc2626;
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* Container Transitions */
+    .container {
+      width: 100%;
+      max-width: 800px;
+      padding: 24px;
+      display: none;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Card styling */
+    .card {
+      background-color: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Login Form */
+    #login-container {
+      max-width: 420px;
+      display: block; /* Default visible if not logged in */
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-align: center;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      height: 42px;
+      background-color: var(--bg-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      color: var(--text-main);
+      padding: 0 14px;
+      font-family: var(--font);
+      font-size: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    }
+
+    .btn {
+      width: 100%;
+      height: 42px;
+      background-color: var(--primary);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-danger {
+      background-color: var(--danger);
+    }
+
+    .btn-danger:hover {
+      background-color: var(--danger-hover);
+    }
+
+    .error-msg {
+      color: var(--danger);
+      font-size: 13px;
+      margin-top: 8px;
+      text-align: center;
+      display: none;
+    }
+
+    /* Glossary Panel */
+    #panel-container {
+      max-width: 800px;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 16px;
+    }
+
+    .header-actions h2 {
+      text-align: left;
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      background-color: var(--primary);
+      color: white;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .logout-btn {
+      width: auto;
+      height: 32px;
+      padding: 0 12px;
+      font-size: 12px;
+      background-color: transparent;
+      border: 1px solid var(--border-dark);
+      color: var(--text-muted);
+    }
+
+    .logout-btn:hover {
+      background-color: var(--border-dark);
+      color: var(--text-main);
+    }
+
+    /* Add Term Grid */
+    .add-term-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 12px;
+      margin-bottom: 24px;
+      background-color: rgba(255, 255, 255, 0.02);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px dashed var(--border-dark);
+    }
+
+    /* Search Input */
+    .search-container {
+      margin-bottom: 16px;
+    }
+
+    /* Term Table */
+    .table-container {
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      overflow: hidden;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: rgba(255, 255, 255, 0.05);
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-dark);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    tr:not(:last-child) {
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    tr:hover {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .action-cell {
+      text-align: right;
+      width: 80px;
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: color 0.2s, background-color 0.2s;
+    }
+
+    .delete-btn:hover {
+      color: var(--danger);
+      background-color: rgba(239, 68, 68, 0.1);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. LOGIN CONTAINER -->
+  <div id="login-container" class="container" style="display: block;">
+    <div class="card">
+      <h2>Glossary Manager</h2>
+      <div class="subtitle">Enter the administrator password to manage your corporate dictionary</div>
+      
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="admin-password">Admin Password</label>
+          <input type="password" id="admin-password" placeholder="••••••••" required>
+          <div id="login-error" class="error-msg">Incorrect password. Please try again.</div>
+        </div>
+        <button type="submit" class="btn">Access Panel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. GLOSSARY PANEL CONTAINER -->
+  <div id="panel-container" class="container">
+    <div class="card">
+      <div class="header-actions">
+        <h2>
+          Corporate Glossary
+          <span id="term-count" class="badge">0 terms</span>
+        </h2>
+        <button onclick="handleLogout()" class="btn logout-btn">Logout</button>
+      </div>
+
+      <!-- Add New Term Form -->
+      <form id="add-term-form" onsubmit="handleAddTerm(event)">
+        <div class="add-term-grid">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label>Source Term (Vietnamese)</label>
+            <input type="text" id="source-term" placeholder="e.g. Hóa đơn GTGT" required>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label>Target Translation (English/Target)</label>
+            <input type="text" id="target-term" placeholder="e.g. VAT Invoice" required>
+          </div>
+          <div style="display: flex; align-items: flex-end;">
+            <button type="submit" class="btn" style="height: 42px; padding: 0 20px; width: auto;">Add Term</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input type="text" id="search-input" oninput="filterTerms()" placeholder="Search terms...">
+      </div>
+
+      <!-- Terms Table -->
+      <div class="table-container">
+        <table id="terms-table">
+          <thead>
+            <tr>
+              <th>Source Term</th>
+              <th>Translation</th>
+              <th class="action-cell">Action</th>
+            </tr>
+          </thead>
+          <tbody id="terms-tbody">
+            <!-- Dynamic rows will be inserted here -->
+          </tbody>
+        </table>
+        <div id="empty-state" class="empty-state" style="display: none;">
+          No terminology terms found.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let glossaryData = {};
+
+    // Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedPass = sessionStorage.getItem('adminPassword');
+      if (savedPass) {
+        loadGlossary(savedPass);
+      } else {
+        document.getElementById('login-container').style.display = 'block';
+        document.getElementById('admin-password').focus();
+      }
+    });
+
+    // Handle Login Submit
+    async function handleLogin(e) {
+      e.preventDefault();
+      const passwordInput = document.getElementById('admin-password');
+      const errorDiv = document.getElementById('login-error');
+      
+      const success = await loadGlossary(passwordInput.value);
+      if (success) {
+        sessionStorage.setItem('adminPassword', passwordInput.value);
+        passwordInput.value = '';
+        errorDiv.style.display = 'none';
+      } else {
+        errorDiv.style.display = 'block';
+        passwordInput.focus();
+      }
+    }
+
+    // Handle Logout
+    function handleLogout() {
+      sessionStorage.removeItem('adminPassword');
+      glossaryData = {};
+      document.getElementById('panel-container').style.display = 'none';
+      document.getElementById('login-container').style.display = 'block';
+      document.getElementById('admin-password').focus();
+    }
+
+    // Load Glossary from Backend API
+    async function loadGlossary(password) {
+      try {
+        const response = await fetch('/api/admin/glossary', {
+          method: 'GET',
+          headers: {
+            'x-admin-password': password
+          }
+        });
+
+        if (response.status === 200) {
+          glossaryData = await response.json();
+          renderTerms();
+          document.getElementById('login-container').style.display = 'none';
+          document.getElementById('panel-container').style.display = 'block';
+          return true;
+        }
+      } catch (err) {
+        console.error('Connection error:', err);
+      }
+      return false;
+    }
+
+    // Save Glossary to Backend API
+    async function saveGlossary() {
+      const password = sessionStorage.getItem('adminPassword');
+      try {
+        const response = await fetch('/api/admin/glossary', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-password': password
+          },
+          body: JSON.stringify(glossaryData)
+        });
+
+        if (response.status === 200) {
+          renderTerms();
+          return true;
+        } else {
+          alert('Failed to save glossary. Unauthorized.');
+          handleLogout();
+        }
+      } catch (err) {
+        alert('Error saving glossary: ' + err.message);
+      }
+      return false;
+    }
+
+    // Render Table Rows
+    function renderTerms() {
+      const tbody = document.getElementById('terms-tbody');
+      const countBadge = document.getElementById('term-count');
+      const emptyState = document.getElementById('empty-state');
+      
+      tbody.innerHTML = '';
+      const entries = Object.entries(glossaryData);
+      
+      countBadge.innerText = `${entries.length} term${entries.length !== 1 ? 's' : ''}`;
+      
+      if (entries.length === 0) {
+        emptyState.style.display = 'block';
+        return;
+      }
+      
+      emptyState.style.display = 'none';
+      
+      // Sort terms alphabetically
+      entries.sort((a, b) => a[0].localeCompare(b[0]));
+      
+      entries.forEach(([source, target]) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td style="font-weight: 500;">${escapeHtml(source)}</td>
+          <td style="color: var(--text-muted);">${escapeHtml(target)}</td>
+          <td class="action-cell">
+            <button class="delete-btn" onclick="deleteTerm('${escapeJs(source)}')" title="Delete Term">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+              </svg>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Add New Term
+    async function handleAddTerm(e) {
+      e.preventDefault();
+      const sourceInput = document.getElementById('source-term');
+      const targetInput = document.getElementById('target-term');
+      
+      const source = sourceInput.value.trim();
+      const target = targetInput.value.trim();
+      
+      if (!source || !target) return;
+      
+      glossaryData[source] = target;
+      
+      const success = await saveGlossary();
+      if (success) {
+        sourceInput.value = '';
+        targetInput.value = '';
+        sourceInput.focus();
+      }
+    }
+
+    // Delete Term
+    async function deleteTerm(source) {
+      if (confirm(`Are you sure you want to delete the term "${source}"?`)) {
+        delete glossaryData[source];
+        await saveGlossary();
+      }
+    }
+
+    // Filter terms based on search input
+    function filterTerms() {
+      const search = document.getElementById('search-input').value.toLowerCase();
+      const rows = document.querySelectorAll('#terms-tbody tr');
+      let visibleCount = 0;
+      
+      rows.forEach(row => {
+        const sourceText = row.cells[0].innerText.toLowerCase();
+        const targetText = row.cells[1].innerText.toLowerCase();
+        
+        if (sourceText.includes(search) || targetText.includes(search)) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+      
+      const emptyState = document.getElementById('empty-state');
+      if (visibleCount === 0 && rows.length > 0) {
+        emptyState.style.display = 'block';
+        emptyState.innerText = 'No matching terms found.';
+      } else if (rows.length === 0) {
+        emptyState.style.display = 'block';
+        emptyState.innerText = 'No terminology terms found.';
+      } else {
+        emptyState.style.display = 'none';
+      }
+    }
+
+    // Utilities
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    function escapeJs(str) {
+      return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+    }
+  </script>
+</body>
+</html>
