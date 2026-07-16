@@ -9,7 +9,7 @@ Phiên bản VSTO (Visual Studio Tools for Office) của Add-in dịch thuật s
 ### Yêu Cầu Hệ Thống (Môi trường Build)
 *   **Hệ điều hành:** Windows 10 / 11.
 *   **Visual Studio:** Phiên bản 2019 / 2022 trở lên.
-*   **Workload bắt buộc:** Gói công cụ **Office/SharePoint development** (Phát triển Office/SharePoint) phải được cài đặt trên Visual Studio.
+*   **Workload bắt buộc:** Gói công cụ **Microsoft 365 development** (hoặc **Office/SharePoint development** trên các bản VS cũ hơn) phải được cài đặt trên Visual Studio.
 
 ### Các Bước Biên Dịch ra file `setup.exe` duy nhất:
 1.  Mở PowerShell tại thư mục `vsto-version/`.
@@ -35,7 +35,7 @@ Nếu khi chạy `BuildVSTO.ps1` bạn gặp lỗi biên dịch liên quan đế
 1.  Mở chương trình **Visual Studio Installer** trên máy tính của bạn.
 2.  Tìm phiên bản Visual Studio đang sử dụng và nhấn nút **Modify** (Sửa).
 3.  Tại tab **Workloads**, cuộn xuống nhóm **Other Toolsets** (Các bộ công cụ khác).
-4.  Tích chọn vào ô **Office/SharePoint development** (Phát triển Office/SharePoint).
+4.  Tích chọn vào ô **Microsoft 365 development** (được mô tả là dùng để tạo Office, SharePoint và VSTO add-ins).
 5.  Nhấn nút **Modify** (Sửa) ở góc dưới bên phải để bắt đầu tải xuống và cài đặt bổ sung.
 6.  Sau khi hoàn tất, mở lại PowerShell và chạy lại lệnh build `.\BuildVSTO.ps1`. Lỗi sẽ biến mất hoàn toàn.
 
